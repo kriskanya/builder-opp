@@ -6,7 +6,9 @@
   }
   function login() {
     var username = $('#username').val();
-    ajax('/login', 'post', {username: username});
+    ajax('/login', 'post', {username: username}, (function(h) {
+      $('#dashboard').empty().append(h);
+    }));
   }
   function ajax(url, type) {
     var data = arguments[2] !== (void 0) ? arguments[2] : {};

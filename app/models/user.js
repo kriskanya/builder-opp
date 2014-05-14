@@ -11,8 +11,8 @@ class User{
 
   static login(username, fn){
     username = username.trim().toLowerCase();
-    users.findOne({username:username}, (e,user)=>{
-      if(user){
+    users.findOne({username:username}, (e,user)=>{  //we are finding the username entered
+      if(user){    //if the user name entered exists, return run User.login with user as the parameter
         fn(user);
       }else{
         user = new User(username);  //calling the constructor, which creates objects
