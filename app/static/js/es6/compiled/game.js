@@ -3,6 +3,36 @@
   $(document).ready(init);
   function init() {
     $('#login').click(login);
+    $('#dashboard').on('click', '#plant', plant);
+    $('#dashboard').on('click', '#getforest', forest);
+    $('#forest').on('click', '.grow', grow);
+    $('#forest').on('click', '.chop', chop);
+  }
+  function chop() {
+    var tree = $(this).closest('.tree');
+    var treeId = tree.attr('data-id');
+    ajax(("/trees/" + treeId + "/chop"), 'put', null, (function(h) {
+      tree.replaceWith(h);
+    }));
+  }
+  function grow() {
+    var tree = $(this).closest('.tree');
+    var treeId = tree.attr('data-id');
+    ajax(("/trees/" + treeId + "/grow"), 'put', null, (function(h) {
+      tree.replaceWith(h);
+    }));
+  }
+  function forest() {
+    var userId = $('#user').attr('data-id');
+    ajax(("/trees?userId=" + userId), 'get', null, (function(h) {
+      $('#forest').empty().append(h);
+    }));
+  }
+  function plant() {
+    var userId = $('#user').attr('data-id');
+    ajax('/trees/plant', 'post', {userId: userId}, (function(h) {
+      $('#forest').append(h);
+    }));
   }
   function login() {
     var username = $('#username').val();
